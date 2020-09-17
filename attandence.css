@@ -1,0 +1,119 @@
+.attCommon{
+    width:50px;
+    height:50px;
+    border-radius: 25px;
+    position:absolute;
+    top:200px;
+    left:25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px  rgba(0,0,0,0.1);
+}
+
+#attBtn{
+    /* common
+    width:50px;
+    height:50px;
+    border-radius: 25px;
+    position:absolute;
+    top:200px;
+    left:25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px  rgba(0,0,0,0.1);
+    specific*/
+    background-color:red;
+    font-size: 30px;
+    color:white;
+    text-align: center;
+    z-index:2
+}
+
+#attPanel{
+    background-color: rgba(254,254,254,0.7);
+    z-index:1;
+    transition: linear;
+    transition-duration: 0.5s;
+}
+.panelHidden{
+    display: none;
+}
+
+#attPanel:hover{
+    background-color: white;
+}
+
+.attPanelTransition{
+    width: auto;
+    height: auto;
+    padding: 20px;
+    top: 220px;
+    left: 45px;
+    border-radius: 10px;
+}
+
+#tblSps, #inptSps,#stsSps{
+    padding: 30px;
+}
+
+#btnSps{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#captr, #cpyAtt{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+/*#startAttCap, #stopAttCap, #instAtt,#cpyBtn, #cpyExlBtn*/
+#btnSps button{
+    padding: 10px 20px;
+    background-color: transparent;
+    border-width: 0px;
+    border-left: 2px solid gray;
+    border-radius: 0px;
+    transition:linear;
+    transition-duration: 300ms;
+}
+
+/*#startAttCap:hover, #stopAttCap:hover, #instAtt:hover*/
+#captr button:hover{
+    background-color: rgb(69, 69, 212);
+    box-shadow: 2px 2px lightgrey;
+    color:white;
+    font-weight: bold;
+}
+
+#captr button:last-of-type, #cpyAtt button:last-of-type{
+    border-radius:0 5px 5px 0;
+}
+
+/*#cpyBtn:hover, #cpyExlBtn:hover*/
+#cpyAtt button:hover{
+    background-color: rgb(7, 148, 7);
+    box-shadow: 2px 2px lightgrey;
+    color:white;
+    font-weight: bold;
+}
+
+/*#startAttCap:disabled, #stopAttCap:disabled, #instAtt:disabled, 
+#cpyBtn:disabled, #cpyExlBtn:disabled*/
+#btnSps button:disabled{
+    background-color: lightgray;
+    color: gray;
+}
+
+
+.attendenceTable{
+    border: 2px solid gray;
+}
+.attendenceTable td{
+    border: 2px solid lightgrey;
+}

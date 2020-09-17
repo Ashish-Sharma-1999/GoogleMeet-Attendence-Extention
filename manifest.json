@@ -1,0 +1,20 @@
+// NOTE TO STUDENT: You should NOT modify this file unless instructed by the
+// course staff.
+{
+  "name": "Attendance takes",
+  "version": "1.0",
+  "description": "Takes attendance for online class taken via google meet",
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js":["roll_data.js","attendanceCapturer.js"],
+      "css": ["attandence.css"]
+    }
+  ],
+  "icons": {
+    "16": "evil.png",
+    "48": "evil.png",
+    "128": "evil.png"
+  },
+  "manifest_version": 2
+}
