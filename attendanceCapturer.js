@@ -6,7 +6,7 @@ Data={
     capturingTimer: null
 
 }
-
+//aria-label="Close"
 AttendanceUI={
     init:function(){
         //creating differnt buttons.
@@ -85,12 +85,10 @@ AttendanceUI={
         str2=str1.replace(/,/g,' ');
         console.log(str2);
         
-        textarea.value=str2+'\nno of Absent Students: '+absent.length;
-        textarea.value+='\nno of Present Students: '+(rollNoData.rollNos.length-absent.length);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-    
+        str2+=+'\nno of Absent Students: '+absent.length;
+        str2+='\nno of Present Students: '+(rollNoData.rollNos.length-absent.length);
+        
+        AttendanceUI.copyDataToClipboard(str2);
     
         //resize
         //attendenceTab.style.zoom='25%';
@@ -130,7 +128,7 @@ AttendanceUI={
         }
         str+="</table>"
 
-        this.tableSpace.innerHTML+=str;
+        this.tableSpace.innerHTML=str;
     },
 
     clearTable: function(){
@@ -138,16 +136,44 @@ AttendanceUI={
     },
 
     startCapturing: function(){
+        GoogleMeetInterface.getParticipantButton();
+        GoogleMeetInterface.getParticipantList();
         console.log('started capturing');
+        if(Attendence.record==null)
+            Attendence.initRecord();
         Data.capturingTimer=setInterval(()=>{
             time=new Date();
-            console.log(time.getMinutes()+':'+time.getSeconds());
-        },5000);
+            entrytimestamp=time.getHours()+':'+time.getMinutes();
+            console.log(entrytimestamp);
+            GoogleMeetInterface.getAttendence();
+            
+            Attendence.record.timeStamp.push(entrytimestamp);
+            Attendence.rollNoList.forEach(rollNo=>{
+                rollNoAbsent=Attendence.absent.has(rollNo);
+                Attendence.record[rollNo].push(rollNoAbsent);
+            });
+        },120000);
     },
 
     stopCapturing: function(){
         console.log('stopped capturing');
         clearInterval(Data.capturingTimer);
+        Attendence.absent=new Set();
+        Attendence.rollNoList.forEach(rollNo=>{
+            absents=0;
+            Attendence.record[rollNo].forEach(status=>{
+                if(status)
+                    absents++;
+            });
+            percent=(absents*100)/Attendence.record[rollNo].length;
+            if(percent>=25){
+                Attendence.absent.add(rollNo);
+            }/*else{
+                Attendence.absent.delete(rollNo);
+            }*/
+        });
+        AttendanceUI.copyDataToClipboard(JSON.stringify(Attendence.record));
+        AttendanceUI.displayTable(Attendence.absent,"Absent Students");
     } 
 }
 
@@ -233,7 +259,7 @@ Attendence={
     initRecord:function(){
         record=new Object();
         record.timeStamp=[];
-        rollNoList.forEach(rollNo=>{
+        this.rollNoList.forEach(rollNo=>{
             record[rollNo]=[];
         });
 
